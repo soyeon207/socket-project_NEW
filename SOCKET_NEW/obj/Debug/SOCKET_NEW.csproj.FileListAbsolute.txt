@@ -1,0 +1,10 @@
+C:\project\SOCKET_NEW\SOCKET_NEW\bin\Debug\SOCKET_NEW.exe.config
+C:\project\SOCKET_NEW\SOCKET_NEW\bin\Debug\SOCKET_NEW.exe
+C:\project\SOCKET_NEW\SOCKET_NEW\bin\Debug\SOCKET_NEW.pdb
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csprojAssemblyReference.cache
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Form1.resources
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Properties.Resources.resources
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csproj.GenerateResource.cache
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csproj.CoreCompileInputs.cache
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.exe
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.pdb
