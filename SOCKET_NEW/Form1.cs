@@ -17,20 +17,20 @@ namespace SOCKET_NEW
             InitializeComponent();
         }
 
-        private void Button1_Click(object sender, EventArgs e)
+        private void Button1_Click(object sender, EventArgs e) // 종료 버튼 눌렀을 때 
         {
-            this.Dispose();
+            this.Dispose(); // 창 종료
         }
 
-        private void Client_Click(object sender, EventArgs e)
+        private void Client_Click(object sender, EventArgs e) // Client 버튼 눌렀을 때
         {
-            Client client = new Client();
+            Client client = new Client(); // Client 실행
             client.Show();
         }
 
-        private void Server_Click(object sender, EventArgs e)
+        private void Server_Click(object sender, EventArgs e) // Server 버튼 눌렀을 때
         {
-            Server server = new Server();
+            Server server = new Server(); // Server 실행
             server.Show();
         }
     }

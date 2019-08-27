@@ -8,3 +8,5 @@ C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csproj.GenerateResource.ca
 C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csproj.CoreCompileInputs.cache
 C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.exe
 C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.pdb
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Client.resources
+C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Server.resources
