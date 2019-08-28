@@ -54,7 +54,7 @@ namespace SOCKET_NEW
 
                     clientList.Add(clientSocket, user_name); // 이름 저장
 
-                    SendMessageAll(user_name + " Joined ", "", false); // 모든 사용자에게 보낸다.
+                    SendMessageAll(user_name + " 님이 방에 들어왔습니다 ", "", false); // 모든 사용자에게 보낸다.
 
                     handleClient h_client = new handleClient(); // 클라이언트 추가
                     h_client.OnReceived += new handleClient.MessageDisplayHandler(OnReceived);
