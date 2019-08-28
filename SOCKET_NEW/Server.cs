@@ -84,7 +84,7 @@ namespace SOCKET_NEW
         private void OnReceived(string message, string user_name) // 문자가 오면 
         {
             if (message.Equals("leaveChat"))
-            {
+            { // leaveChat을 받으면 채팅창을 떠난것이니깐 메세지로 표시해줌.
                 string displayMessage = "leave user : " + user_name;
                 DisplayText(displayMessage);
                 SendMessageAll("leaveChat", user_name, true);
@@ -114,7 +114,7 @@ namespace SOCKET_NEW
                     if (message.Equals("leaveChat"))
                         buffer = Encoding.Unicode.GetBytes(user_name + " 님이 대화방을 나갔습니다.");
                     else
-                        buffer = Encoding.Unicode.GetBytes( user_name + " : " + message + " [" + date + "] ");
+                        buffer = Encoding.Unicode.GetBytes( user_name + " : " + message + " [" + date + "] "); //메세지를 보낸 날짜를 뒤에 표시
                 }
 
                 else
@@ -129,7 +129,7 @@ namespace SOCKET_NEW
         }
 
         private void DisplayText(string text)
-        {
+        { // Server 화면에 출력
             if (richTextBox1.InvokeRequired)
             {
                 richTextBox1.BeginInvoke(new MethodInvoker(delegate
@@ -142,13 +142,13 @@ namespace SOCKET_NEW
         }
 
         private void Exit_Click(object sender, EventArgs e)
-        {
-            this.Dispose();
+        { // 종료 버튼을 누르면
+            this.Dispose(); // 창을 닫아줌
         }
 
         private void Ip_chk_Click(object sender, EventArgs e) // 본인 IP 확인하기를 누르면 
         {
-            ip_txt.Text = Get_MyIP();
+            ip_txt.Text = Get_MyIP(); 
         }
 
         public string Get_MyIP() // 아이피 확인

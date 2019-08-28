@@ -24,10 +24,10 @@ namespace SOCKET_NEW
 
         private void Exit_Click(object sender, EventArgs e) // 종료 누르면
         {
-            byte[] buffer = Encoding.Unicode.GetBytes("leaveChat" + "$");
+            byte[] buffer = Encoding.Unicode.GetBytes("leaveChat" + "$"); // leaveChat을 날려주고
             stream.Write(buffer, 0, buffer.Length);
             stream.Flush();
-            this.Dispose();
+            this.Dispose(); // 창을 닫음
         }
 
         private void Open_Click(object sender, EventArgs e) // 열기 버튼을 누르면 
@@ -49,7 +49,7 @@ namespace SOCKET_NEW
             t_handler.Start();
         }
 
-        private void GetMessage()
+        private void GetMessage() // 메세지를 받음
         {
             while (true)
             {
@@ -76,7 +76,7 @@ namespace SOCKET_NEW
             }
         }
         private void DisplayText(string text)
-        {
+        { // Server에 메세지 출력
             if (richTextBox1.InvokeRequired)
             {
                 richTextBox1.BeginInvoke(new MethodInvoker(delegate
@@ -112,11 +112,11 @@ namespace SOCKET_NEW
         }
 
         private void Client_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            byte[] buffer = Encoding.Unicode.GetBytes("leaveChat" + "$");
+        { // 폼 닫을 때 실행되는 함수
+            byte[] buffer = Encoding.Unicode.GetBytes("leaveChat" + "$"); // leaveChat을 날려줌
             stream.Write(buffer, 0, buffer.Length);
             stream.Flush();
-            this.Dispose();
+            this.Dispose(); // 그리고 창을 닫음.
         }
 
         private void Client_FormClosed(object sender, FormClosedEventArgs e)
