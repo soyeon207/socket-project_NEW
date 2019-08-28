@@ -10,10 +10,11 @@ namespace SOCKET_NEW
 {
     public partial class Server : Form
     {
-        TcpListener server = null;
-        TcpClient clientSocket = null;
-        static int counter = 0;
+        TcpListener server = null; // 서버
+        TcpClient clientSocket = null; // 소켓
+        static int counter = 0; // 사용자 수
         int p;
+        string date; // 날자 저장하는 변수
 
         public Dictionary<TcpClient, string> clientList = new Dictionary<TcpClient, string>();
 
@@ -22,37 +23,26 @@ namespace SOCKET_NEW
             InitializeComponent();
         }
 
-        private void Open_Click(object sender, EventArgs e)
+        private void Open_Click(object sender, EventArgs e) // 열기 버튼을 누르면 실행
         {
             p = Int32.Parse(port.Text);
-            Thread t = new Thread(InitSocket);
+            Thread t = new Thread(InitSocket); // Thread 생성
             t.IsBackground = true;
-            t.Start();
+            t.Start(); // Thread 실행
         }
 
-        public void NameChange(string str)
-        {
-            clientSocket = server.AcceptTcpClient();
-            NetworkStream stream = clientSocket.GetStream();
-            byte[] buffer = new byte[1024];
-            int bytes = stream.Read(buffer, 0, buffer.Length);
-            string user_name = Encoding.Unicode.GetString(buffer, 0, bytes);
-            user_name = user_name.Substring(0, user_name.IndexOf("$"));
-
-            clientList.Add(clientSocket, user_name);
-        }
         private void InitSocket()
         {
             server = new TcpListener(IPAddress.Parse(ip.Text), p);
-            clientSocket = default(TcpClient);
-            server.Start();
+            clientSocket = default(TcpClient); // 소켓을 설정함
+            server.Start(); // 서버 시작
             DisplayText(">> Server Started");
 
             while (true)
             {
                 try
                 {
-                    counter++;
+                    counter++; // 사용자 수 증가
                     clientSocket = server.AcceptTcpClient();
                     DisplayText(">> Accept connection from client");
 
@@ -60,14 +50,13 @@ namespace SOCKET_NEW
                     byte[] buffer = new byte[1024];
                     int bytes = stream.Read(buffer, 0, buffer.Length);
                     string user_name = Encoding.Unicode.GetString(buffer, 0, bytes);
-                    user_name = user_name.Substring(0, user_name.IndexOf("$"));
+                    user_name = user_name.Substring(0, user_name.IndexOf("$")); // 사용자 명
 
-                    clientList.Add(clientSocket, user_name);
+                    clientList.Add(clientSocket, user_name); // 이름 저장
 
-                    // send message all user
-                    SendMessageAll(user_name + " Joined ", "", false);
+                    SendMessageAll(user_name + " Joined ", "", false); // 모든 사용자에게 보낸다.
 
-                    handleClient h_client = new handleClient();
+                    handleClient h_client = new handleClient(); // 클라이언트 추가
                     h_client.OnReceived += new handleClient.MessageDisplayHandler(OnReceived);
                     h_client.OnDisconnected += new handleClient.DisconnectedHandler(h_client_OnDisconnected);
                     h_client.startClient(clientSocket, clientList);
@@ -82,43 +71,61 @@ namespace SOCKET_NEW
                 }
             }
 
-            clientSocket.Close();
-            server.Stop();
+            clientSocket.Close(); 
+            server.Stop(); // 서버 종료
         }
 
         void h_client_OnDisconnected(TcpClient clientSocket)
-        {
+        { // 클라이언트 접속 해제
             if (clientList.ContainsKey(clientSocket))
                 clientList.Remove(clientSocket);
         }
 
-        private void OnReceived(string message, string user_name)
+        private void OnReceived(string message, string user_name) // 문자가 오면 
         {
-            string displayMessage = "From client : " + user_name + " : " + message;
-            DisplayText(displayMessage);
-            SendMessageAll(message, user_name, true);
+            if (message.Equals("leaveChat"))
+            {
+                string displayMessage = "leave user : " + user_name;
+                DisplayText(displayMessage);
+                SendMessageAll("leaveChat", user_name, true);
+            }
+
+            else
+            {
+                string displayMessage = "From client : " + user_name + " : " + message;
+                DisplayText(displayMessage); // Server단에 출력
+                SendMessageAll(message, user_name, true); // 모든 Client에게 전송
+            }
         }
 
         public void SendMessageAll(string message, string user_name, bool flag)
         {
             foreach (var pair in clientList)
+
             {
+                date = DateTime.Now.ToString("yyyy.MM.dd. HH:mm:ss"); // 현재 날짜 받기
+
                 TcpClient client = pair.Key as TcpClient;
                 NetworkStream stream = client.GetStream();
                 byte[] buffer = null;
 
                 if (flag)
                 {
-                    buffer = Encoding.Unicode.GetBytes(user_name + " says : " + message);
+                    if (message.Equals("leaveChat"))
+                        buffer = Encoding.Unicode.GetBytes(user_name + " 님이 대화방을 나갔습니다.");
+                    else
+                        buffer = Encoding.Unicode.GetBytes( user_name + " : " + message + " [" + date + "] ");
                 }
+
                 else
                 {
                     buffer = Encoding.Unicode.GetBytes(message);
                 }
 
-                stream.Write(buffer, 0, buffer.Length);
+                stream.Write(buffer, 0, buffer.Length); // 버퍼 쓰기
                 stream.Flush();
             }
+
         }
 
         private void DisplayText(string text)
@@ -139,12 +146,12 @@ namespace SOCKET_NEW
             this.Dispose();
         }
 
-        private void Ip_chk_Click(object sender, EventArgs e)
+        private void Ip_chk_Click(object sender, EventArgs e) // 본인 IP 확인하기를 누르면 
         {
             ip_txt.Text = Get_MyIP();
         }
 
-        public string Get_MyIP()
+        public string Get_MyIP() // 아이피 확인
         {
             IPHostEntry host = Dns.GetHostByName(Dns.GetHostName());
             string myip = host.AddressList[0].ToString();

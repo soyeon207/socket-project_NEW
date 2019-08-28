@@ -14,31 +14,31 @@ namespace SOCKET_NEW
         TcpClient clientSocket = new TcpClient();
         NetworkStream stream = default(NetworkStream);
         string message = string.Empty;
-        string before_name;
         string name_save;
-        int sw = 0;
         public Dictionary<TcpClient, string> clientList = new Dictionary<TcpClient, string>();
 
-        public Client()
+        public Client() // 기본 생성자
         {
             InitializeComponent();
         }
 
         private void Exit_Click(object sender, EventArgs e) // 종료 누르면
         {
+            byte[] buffer = Encoding.Unicode.GetBytes("leaveChat" + "$");
+            stream.Write(buffer, 0, buffer.Length);
+            stream.Flush();
             this.Dispose();
         }
 
-        private void Open_Click(object sender, EventArgs e)
+        private void Open_Click(object sender, EventArgs e) // 열기 버튼을 누르면 
         {
             
-            clientSocket.Connect(ip.Text, Int32.Parse(port.Text));
+            clientSocket.Connect(ip.Text, Int32.Parse(port.Text)); // 아이피와 포트 번호로 socket에 연결
             stream = clientSocket.GetStream();
             
             message = "Connected to Chat Server";
             DisplayText(message);
             name_save = this.name.Text;
-            before_name = name_save;
 
             byte[] buffer = Encoding.Unicode.GetBytes(name_save + "$");
             stream.Write(buffer, 0, buffer.Length);
@@ -64,9 +64,8 @@ namespace SOCKET_NEW
             }
         }
 
-        private bool WordCheck(string str)
+        private bool WordCheck(string str) // 본인의 이름과 보낸 문자의 이름을 비교
         {
-            //192.168.19.1
             if (str.Equals(name_save))
             {
                 return true;
@@ -83,21 +82,14 @@ namespace SOCKET_NEW
                 richTextBox1.BeginInvoke(new MethodInvoker(delegate
                 {
 
-                    if (sw == 1)
-                    {
-                        text = name_save + text.Substring(before_name.Length);
-                    }
-
-                    int length = richTextBox1.TextLength;
-                    richTextBox1.AppendText(text + Environment.NewLine);
-
-                    
+                    int length = richTextBox1.TextLength; 
+                    richTextBox1.AppendText(text + Environment.NewLine); 
 
                     string[] t = text.Split();
-                    if (WordCheck(t[0]))
+                    if (WordCheck(t[0])) // 만일 같다면
                     {
                         richTextBox1.Select(length, text.Length);
-                        richTextBox1.SelectionColor = Color.Blue;
+                        richTextBox1.SelectionColor = Color.Blue; // 문장을 파란색으로 바꿔준다.
                     }
                 }));
             }
@@ -105,15 +97,31 @@ namespace SOCKET_NEW
                 richTextBox1.AppendText(text  + Environment.NewLine);
         }
 
-        private void Send_Click(object sender, EventArgs e)
+        private void Send_Click(object sender, EventArgs e) // 보내기 버튼 눌렀을 때 
         {
             
             byte[] buffer = Encoding.Unicode.GetBytes(this.comment.Text + "$");
             stream.Write(buffer, 0, buffer.Length);
-            comment.Text = "";
+            comment.Text = ""; // comment에 있던 글자를 지워준다
             stream.Flush();
         }
 
-       
+        private void Client_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Client_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            byte[] buffer = Encoding.Unicode.GetBytes("leaveChat" + "$");
+            stream.Write(buffer, 0, buffer.Length);
+            stream.Flush();
+            this.Dispose();
+        }
+
+        private void Client_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            
+        }
     }
 }
