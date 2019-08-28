@@ -10,3 +10,15 @@ C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.exe
 C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.pdb
 C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Client.resources
 C:\project\SOCKET_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Server.resources
+C:\project\socket-project_NEW\SOCKET_NEW\bin\Debug\SOCKET_NEW.exe.config
+C:\project\socket-project_NEW\SOCKET_NEW\bin\Debug\SOCKET_NEW.exe
+C:\project\socket-project_NEW\SOCKET_NEW\bin\Debug\SOCKET_NEW.pdb
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csprojAssemblyReference.cache
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Client.resources
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Form1.resources
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Properties.Resources.resources
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.Server.resources
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csproj.GenerateResource.cache
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.csproj.CoreCompileInputs.cache
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.exe
+C:\project\socket-project_NEW\SOCKET_NEW\obj\Debug\SOCKET_NEW.pdb

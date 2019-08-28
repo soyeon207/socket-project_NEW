@@ -14,8 +14,11 @@ namespace SOCKET_NEW
         TcpClient clientSocket = new TcpClient();
         NetworkStream stream = default(NetworkStream);
         string message = string.Empty;
-        IPAddress thisAddress;
-        string n;
+        string before_name;
+        string name_save;
+        int sw = 0;
+        public Dictionary<TcpClient, string> clientList = new Dictionary<TcpClient, string>();
+
         public Client()
         {
             InitializeComponent();
@@ -29,14 +32,15 @@ namespace SOCKET_NEW
         private void Open_Click(object sender, EventArgs e)
         {
             
-
             clientSocket.Connect(ip.Text, Int32.Parse(port.Text));
             stream = clientSocket.GetStream();
-
+            
             message = "Connected to Chat Server";
             DisplayText(message);
+            name_save = this.name.Text;
+            before_name = name_save;
 
-            byte[] buffer = Encoding.Unicode.GetBytes(this.name.Text + "$");
+            byte[] buffer = Encoding.Unicode.GetBytes(name_save + "$");
             stream.Write(buffer, 0, buffer.Length);
             stream.Flush();
 
@@ -56,17 +60,14 @@ namespace SOCKET_NEW
 
                 string message = Encoding.Unicode.GetString(buffer, 0, bytes);
                 
-
                 DisplayText(message);
             }
         }
 
         private bool WordCheck(string str)
         {
-            ip.Text = comment.Text;
-            port.Text = str;
-
-            if (str.Equals(this.comment.Text))
+            //192.168.19.1
+            if (str.Equals(name_save))
             {
                 return true;
             }
@@ -81,16 +82,23 @@ namespace SOCKET_NEW
             {
                 richTextBox1.BeginInvoke(new MethodInvoker(delegate
                 {
-                    string[] t = text.Split();
+
+                    if (sw == 1)
+                    {
+                        text = name_save + text.Substring(before_name.Length);
+                    }
+
+                    int length = richTextBox1.TextLength;
                     richTextBox1.AppendText(text + Environment.NewLine);
+
+                    
+
+                    string[] t = text.Split();
                     if (WordCheck(t[0]))
                     {
-                        ip.Text = "s";
-                        richTextBox1.Select(0, t[0].Length);
+                        richTextBox1.Select(length, text.Length);
                         richTextBox1.SelectionColor = Color.Blue;
                     }
-                    richTextBox1.SelectionColor = Color.Blue;
-                    
                 }));
             }
             else
@@ -99,10 +107,13 @@ namespace SOCKET_NEW
 
         private void Send_Click(object sender, EventArgs e)
         {
+            
             byte[] buffer = Encoding.Unicode.GetBytes(this.comment.Text + "$");
             stream.Write(buffer, 0, buffer.Length);
-           
+            comment.Text = "";
             stream.Flush();
         }
+
+       
     }
 }

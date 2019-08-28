@@ -30,6 +30,17 @@ namespace SOCKET_NEW
             t.Start();
         }
 
+        public void NameChange(string str)
+        {
+            clientSocket = server.AcceptTcpClient();
+            NetworkStream stream = clientSocket.GetStream();
+            byte[] buffer = new byte[1024];
+            int bytes = stream.Read(buffer, 0, buffer.Length);
+            string user_name = Encoding.Unicode.GetString(buffer, 0, bytes);
+            user_name = user_name.Substring(0, user_name.IndexOf("$"));
+
+            clientList.Add(clientSocket, user_name);
+        }
         private void InitSocket()
         {
             server = new TcpListener(IPAddress.Parse(ip.Text), p);
@@ -126,6 +137,18 @@ namespace SOCKET_NEW
         private void Exit_Click(object sender, EventArgs e)
         {
             this.Dispose();
+        }
+
+        private void Ip_chk_Click(object sender, EventArgs e)
+        {
+            ip_txt.Text = Get_MyIP();
+        }
+
+        public string Get_MyIP()
+        {
+            IPHostEntry host = Dns.GetHostByName(Dns.GetHostName());
+            string myip = host.AddressList[0].ToString();
+            return myip;
         }
     }
 }
